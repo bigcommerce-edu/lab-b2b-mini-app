@@ -1,12 +1,34 @@
 import { useState, useEffect } from 'react';
 import { type B2BUtils } from '../../hooks/useB2B';
+import { b2bFetch } from '../../b2bClient';
 import { getPdpProductId } from '../../utils/dom';
+import * as z from 'zod';
 import './PreviouslyOrdered.css';
 
-// TODO: Define OrderedProductsQuery using GraphQL syntax
+const OrderedProductsQuery = `
+  query GetOrderedProducts($productId: Decimal) {
+    orderedProducts(productId: $productId) {
+      edges {
+        node {
+          productId
+        }
+      }
+    }
+  }
+`;
 
-// TODO: Define the schema for the OrderedProductsQuery response using zod
-//  - Also use the zod schema to define the OrderedProductsResponse type
+const OrderedProductsResponseSchema = z.object({
+  data: z.object({
+    orderedProducts: z.object({
+      edges: z.array(z.object({
+        node: z.object({
+          productId: z.string(),
+        }),
+      })),
+    }),
+  }),
+});
+type OrderedProductsResponse = z.infer<typeof OrderedProductsResponseSchema>;
 
 export default function PreviouslyOrdered({ b2bUtils }: { b2bUtils: B2BUtils }) {
   // Can't query relevant data if user profile doesn't exist
@@ -24,14 +46,15 @@ export default function PreviouslyOrdered({ b2bUtils }: { b2bUtils: B2BUtils }) 
       return;
     }
     
-    // TODO: Remove this once the query is implemented
-    setProductIsOrdered(true);
-    
-    // TODO: Query to find out if product is in orderedProducts list
-    //  - Use the b2bFetch function to make the query
-    //  - Make sure to handle the result as a promise
-    //  - Parse the response using the OrderedProductsResponseSchema
-    //  - Set the productIsOrdered state based on whether data.orderedProducts.edges has any items
+    // Query to find out if product is in orderedProducts list
+    b2bFetch<OrderedProductsResponse>(b2bUtils.user, OrderedProductsQuery, { 
+      productId 
+    }).then(resp => {
+      const parsedResp = OrderedProductsResponseSchema.parse(resp);
+      setProductIsOrdered(parsedResp.data.orderedProducts.edges.length > 0);
+    }).catch(err => {
+      console.error('Error fetching ordered products:', err);
+    });
   }, [b2bUtils.user]);
 
   return (
