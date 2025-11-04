@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { type B2BUtils } from '../../hooks/useB2B';
+import { getPdpProductId } from '../../utils/dom';
 import './PreviouslyOrdered.css';
 
 // TODO: Define OrderedProductsQuery using GraphQL syntax
@@ -8,20 +9,23 @@ import './PreviouslyOrdered.css';
 //  - Also use the zod schema to define the OrderedProductsResponse type
 
 export default function PreviouslyOrdered({ b2bUtils }: { b2bUtils: B2BUtils }) {
-  // TODO: Remove this once the component is implemented
-  throw new Error('PreviouslyOrdered component not implemented');
-  
-  // TODO: Check to make sure user exists on b2bUtils
+  // Can't query relevant data if user profile doesn't exist
+  if (!b2bUtils.user) {
+    return null;
+  }
 
-  // TODO: Set up React state to track whether the product is ordered
+  const [productIsOrdered, setProductIsOrdered] = useState(false);
 
   // One-time side effect
   useEffect(() => {
-    // TODO: Get product ID from specific DOM configuration
-    //  - getPdpProductId from DOM utils will do this
-    //  - This side effect shouldn't do anything if there's no user or product ID
+    // Get product ID from specific DOM configuration
+    const productId = getPdpProductId();
+    if (!b2bUtils.user || !productId) {
+      return;
+    }
     
-    // TODO: Temporarily set productIsOrdered to true
+    // TODO: Remove this once the query is implemented
+    setProductIsOrdered(true);
     
     // TODO: Query to find out if product is in orderedProducts list
     //  - Use the b2bFetch function to make the query
@@ -32,7 +36,11 @@ export default function PreviouslyOrdered({ b2bUtils }: { b2bUtils: B2BUtils }) 
 
   return (
     <>
-      {/* TODO: Implement JSX */}
+      {productIsOrdered && (
+        <div className="previously-ordered">
+          You have previously ordered this product.
+        </div>
+      )}
     </>
   );
 }
