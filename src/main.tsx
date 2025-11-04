@@ -1,11 +1,20 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import useB2B, { type B2BUtils } from './hooks/useB2B';
+import HeaderLinks from './components/HeaderLinks';
+import { createRootElement } from './utils/dom';
 
-// TODO: Implement createHeaderLinks
-//  - Use DOM utils to create the root element
-//  - Use "headerLinks" as the component ID
-//  - Pass b2bUtils to the HeaderLinks component
+const createHeaderLinks = (b2bUtils: B2BUtils) => {
+  const root = createRootElement('headerLinks');
+
+  if (root) {
+    createRoot(root).render(
+      <StrictMode>
+        <HeaderLinks b2bUtils={b2bUtils} />
+      </StrictMode>,
+    );
+  }
+};
 
 // TODO: Implement createPreviouslyOrdered
 //  - Use DOM utils to create the root element
@@ -13,8 +22,6 @@ import useB2B, { type B2BUtils } from './hooks/useB2B';
 //  - Pass b2bUtils to the PreviouslyOrdered component
 
 useB2B((b2bUtils) => {
-  console.log('B2B custom app initialized');
-
-  // TODO: Call createHeaderLinks
+  createHeaderLinks(b2bUtils);
   // TODO: Call createPreviouslyOrdered
 });
