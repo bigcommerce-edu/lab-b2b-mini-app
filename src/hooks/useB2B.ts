@@ -21,16 +21,30 @@ declare global {
   }
 }
 
-// TODO: Implement waitForB2bUtils
-//  - Should return a promise that resolves when window.b2b.utils is available
-//  - Use a recursive setTimeout on a short interval to check for the object
+// Set up promise to wait for the b2b utils to be available
+const waitForB2bUtils = () => {
+  return new Promise<void>((resolve) => {
+    const checkUtils = () => {
+      if (window.b2b?.utils) {
+        resolve();
+      } else {
+        setTimeout(checkUtils, 50);
+      }
+    };
+    checkUtils();
+  });
+};
+
 
 const useB2B = (callback: (b2bUtils: B2BUtils) => void) => {
-  // TODO: Remove this once the hook is implemented
-  throw new Error('useB2B hook not implemented');
-  
-  // TODO: Use waitForB2BUtils
-  //  - When promise resolves, make sure utils is available and pass the object to the callback
+  waitForB2bUtils().then(() => {
+    console.log('B2B utils are available');
+
+    // Call the callback with the b2b utils
+    if (window.b2b?.utils) {
+      callback(window.b2b?.utils);
+    }
+  });
 };
 
 export default useB2B;
