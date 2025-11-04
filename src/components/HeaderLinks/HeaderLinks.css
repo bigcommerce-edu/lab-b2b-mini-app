@@ -1,0 +1,13 @@
+.b2b-nav {
+  background-color: #444;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 10px 0 0;
+  font-weight: bold;
+}
+
+.b2b-nav:hover {
+  background-color: #666;
+}
