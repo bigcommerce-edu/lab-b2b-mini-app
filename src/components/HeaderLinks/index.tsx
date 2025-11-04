@@ -1,12 +1,22 @@
 import { type B2BUtils } from '../../hooks/useB2B';
 import './HeaderLinks.css';
 
-// TODO: Define role codes that are allowed to see the header links
+// Define role codes that are allowed to see the header links
+const allowedRoles = [
+  0, // ADMIN
+  1, // SENIOR_BUYER
+  3, // SUPER_ADMIN
+  4, // SUPER_ADMIN_BEFORE_AGENCY
+  5, // CUSTOM_ROLE
+];
+
 
 function HeaderLinks({ b2bUtils }: { b2bUtils: B2BUtils }) {
-  // TODO: Get the B2B user profile and check the role
-  //  - Use the getProfile method on the b2bUtils user
-  //  - Make sure profile exists and role is in the allowed roles
+  // Get the B2B user profile
+  const userProfile = b2bUtils.user ? b2bUtils.user.getProfile() : null;
+  if (!userProfile || !allowedRoles.includes(userProfile.role)) {
+    return null;
+  }
 
   return (
     <>
