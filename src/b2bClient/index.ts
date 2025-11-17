@@ -5,8 +5,10 @@ export const b2bFetch = async <RespType>(
   query: string, 
   variables: Record<string, any>
 ) => {
-  // TODO: Get the B2B token from the user
-  //  - Throw an error if the token is not found
+  const token = user.getB2BToken();
+  if (!token) {
+    throw new Error('B2B token is required');
+  }
 
   return fetch('https://api-b2b.bigcommerce.com/graphql', {
     method: 'POST',
@@ -14,7 +16,7 @@ export const b2bFetch = async <RespType>(
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // TODO: Add the B2B token as a bearer token
+      'Authorization': `Bearer ${token}`,
     },
   })
   .then(response => response.json())
