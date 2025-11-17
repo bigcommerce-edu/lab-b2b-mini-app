@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import HeaderLinks from './components/HeaderLinks';
+import PreviouslyOrdered from './components/PreviouslyOrdered';
 import { createRootElement } from './utils/dom';
 
 const createHeaderLinks = () => {
@@ -15,9 +16,17 @@ const createHeaderLinks = () => {
   }
 };
 
-// TODO: Implement createPreviouslyOrdered
-//  - Use DOM utils to create the root element
-//  - Use "previouslyOrdered" as the component ID
+const createPreviouslyOrdered = () => {
+  const root = createRootElement('previouslyOrdered');
+
+  if (root) {
+    createRoot(root).render(
+      <StrictMode>
+        <PreviouslyOrdered />
+      </StrictMode>,
+    );
+  }
+};
 
 createHeaderLinks();
-// TODO: Call createPreviouslyOrdered
+createPreviouslyOrdered();
