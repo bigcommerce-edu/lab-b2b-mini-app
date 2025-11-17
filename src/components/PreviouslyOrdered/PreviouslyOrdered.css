@@ -1,0 +1,9 @@
+.previously-ordered {
+  background-color: #f0f0f0;
+  margin: 20px 0;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  font-weight: bold;
+}
