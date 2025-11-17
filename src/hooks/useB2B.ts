@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 export interface B2BUser {
-  // TODO: Add getProfile method
-  //  - At minimum, profile should have a role that is a number value
-  
+  getProfile: () => {
+    role: number;
+  }
   // TODO: Add getB2BToken method
 }
 
