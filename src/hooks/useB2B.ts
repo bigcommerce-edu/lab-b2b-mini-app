@@ -24,15 +24,23 @@ declare global {
 }
 
 const useB2B = () => {
-  // TODO: Remove this once the hook is implemented
-  throw new Error('useB2B hook not implemented');
+  const [b2bSdk, setB2bSdk] = useState<B2BSdk | null>(null);
 
-  // TODO: Set up state value `b2bSdk` to store the `window.b2b` object
-  
-  // TODO Use an effect to wait for the `window.b2b` object to be available
-  //  - Set an interval to check for `window.b2b` and then clear the interval
-  //  - When the object is available, set the state value `b2bSdk`
-  //  - Return the state value
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.b2b?.utils) {
+        console.log('B2B utils are available');
+        setB2bSdk(window.b2b);
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return b2bSdk;
 };
 
 export default useB2B;
