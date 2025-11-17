@@ -2,25 +2,38 @@ import { useEffect, useState } from 'react';
 import useB2B from '../../hooks/useB2B';
 import './HeaderLinks.css';
 
-// TODO: Define role codes that are allowed to see the header links
+// Define role codes that are allowed to see the header links
+const allowedRoles = [
+  0, // ADMIN
+  1, // SENIOR_BUYER
+  3, // SUPER_ADMIN
+  4, // SUPER_ADMIN_BEFORE_AGENCY
+  5, // CUSTOM_ROLE
+];
+
 
 function HeaderLinks() {
-  // TODO: Create state value `userIsValid` to track whether the user has correct permissions
-
+  const [userIsValid, setUserIsValid] = useState(false);
+  
   const b2b = useB2B();
-  if (!b2b) return null;
+  
+  useEffect(() => {
+    if (!b2b) return;
 
-  // TODO: Get the B2B user profile and check the role
-  //  - Use a side effect dependent on the B2B SDK
-  //  - Use the getProfile method on the b2bUtils user
-  //  - Make sure profile exists and role is in the allowed roles
-  //  - Set `userIsValid` to true if the user has correct permissions
+    // Get the B2B user profile
+    const userProfile = b2b.utils.user ? b2b.utils.user.getProfile() : null;
+    if (userProfile && allowedRoles.includes(userProfile.role)) {
+      setUserIsValid(true);
+    }
+  }, [b2b]);
 
   return (
+    userIsValid && (
     <>
       <button className="b2b-nav" onClick={() => b2b.utils.openPage('COMPANY_ORDERS')}>Orders</button>
       <button className="b2b-nav" onClick={() => b2b.utils.openPage('INVOICE')}>Invoices</button>
     </>
+    )
   );
 }
 
