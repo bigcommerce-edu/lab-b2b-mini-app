@@ -3,17 +3,16 @@ import useB2B from '../../hooks/useB2B';
 import './HeaderLinks.css';
 
 function HeaderLinks() {
-  // TODO: Remove this once the component is implemented
-  throw new Error('HeaderLinks component not implemented');
-
-  // TODO: Get the B2B SDK with `useB2B`
+  const b2b = useB2B();
+  if (!b2b) return null;
 
   return (
+    b2b && (
     <>
-      {/* TODO: Implement JSX 
-        - Use b2b.utils.openPage to open the company orders ("COMPANY_ORDERS") and invoices ("INVOICE") pages
-      */}
+      <button className="b2b-nav" onClick={() => b2b.utils.openPage('COMPANY_ORDERS')}>Orders</button>
+      <button className="b2b-nav" onClick={() => b2b.utils.openPage('INVOICE')}>Invoices</button>
     </>
+    )
   );
 }
 
