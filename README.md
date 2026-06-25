@@ -11,3 +11,7 @@ dev environment.
 
 A standalone app like this is an option for small UI enhancements outside the Buyer Portal pages themselves, when
 forking and customizing the Buyer Portal is not necessary.
+
+## Labs
+
+The lab exercises and their step-by-step diffs are documented in [docs/TUTORIAL.md](docs/TUTORIAL.md).
