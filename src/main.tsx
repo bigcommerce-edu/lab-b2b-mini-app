@@ -1,8 +1,4 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
+  console.log('B2B custom app initialized');
