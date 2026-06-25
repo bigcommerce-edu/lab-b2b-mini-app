@@ -6,6 +6,9 @@ export interface B2BUser {
 
 export interface B2BSdk {
   utils: {
+    // TODO: Add openPage method
+    //  - Should accept a string ID
+
     user?: B2BUser;
   }
 }
