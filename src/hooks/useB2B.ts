@@ -4,6 +4,7 @@ export interface B2BUser {
   getProfile: () => {
     role: number;
   }
+  // TODO: Add getB2BToken method
 }
 
 export interface B2BSdk {
