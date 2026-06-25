@@ -18,7 +18,15 @@ declare global {
 }
 
 const useB2B = () => {
+  // TODO: Remove this once the hook is implemented
   throw new Error('useB2B hook not implemented');
+
+  // TODO: Set up state value `b2bSdk` to store the `window.b2b` object
+  
+  // TODO Use an effect to wait for the `window.b2b` object to be available
+  //  - Set an interval to check for `window.b2b` and then clear the interval
+  //  - When the object is available, set the state value `b2bSdk`
+  //  - Return the state value
 };
 
 export default useB2B;
