@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1
+
+_Based on Vite (`create-vite`) 8.0.2_
+
+### Summary
+
+Refactored commit history to place TODO comments immediately before the commits that resolve them.
+
 ## 1.0.0
 
 _Based on Vite (`create-vite`) 8.0.2_
